@@ -6,7 +6,7 @@
 {% endcomment %}
 
 <age-verification-modal class="age-verification-modal" data-minimum-age="{{ settings.age_verification_minimum_age }}" data-cookie-days="{{ settings.age_verification_cookie_days }}">
-  <dialog data-ref="dialog" class="age-verification-dialog">
+  <dialog ref="dialog" class="age-verification-dialog">
     <div class="age-verification-content">
       {% if settings.age_verification_logo %}
         <div class="age-verification-logo">
@@ -22,18 +22,18 @@
         </div>
       {% endif %}
 
-      <div class="age-verification-form-wrapper" data-ref="formWrapper">
+      <div class="age-verification-form-wrapper" ref="formWrapper">
         <h2 class="age-verification-title">{{ settings.age_verification_title }}</h2>
         {% if settings.age_verification_subtitle != blank %}
           <p class="age-verification-subtitle">{{ settings.age_verification_subtitle }}</p>
         {% endif %}
 
-        <form class="age-verification-form" data-ref="form">
+        <form class="age-verification-form" ref="form">
           <div class="age-input-group">
             <input
               type="number"
               name="month"
-              data-ref="monthInput"
+              ref="monthInput"
               class="age-input"
               placeholder="MM"
               min="1"
@@ -47,7 +47,7 @@
             <input
               type="number"
               name="day"
-              data-ref="dayInput"
+              ref="dayInput"
               class="age-input"
               placeholder="DD"
               min="1"
@@ -61,7 +61,7 @@
             <input
               type="number"
               name="year"
-              data-ref="yearInput"
+              ref="yearInput"
               class="age-input"
               placeholder="YYYY"
               min="1900"
@@ -74,7 +74,7 @@
             >
           </div>
 
-          <button type="submit" class="age-verification-submit button button--primary" disabled data-ref="submitButton">
+          <button type="submit" class="age-verification-submit button button--primary" disabled ref="submitButton">
             {{ settings.age_verification_button_text }}
           </button>
         </form>
@@ -102,31 +102,31 @@
         {% endif %}
       </div>
 
-      <div class="age-verification-error hidden" data-ref="errorWrapper">
+      <div class="age-verification-error hidden" ref="errorWrapper">
         <h2 class="age-verification-error-title">{{ settings.age_verification_error_title }}</h2>
         
         <div class="countdown-timer">
           <div class="countdown-item">
-            <span class="countdown-value" data-ref="days">0</span>
+            <span class="countdown-value" ref="days">0</span>
             <span class="countdown-label">days</span>
           </div>
           <div class="countdown-item">
-            <span class="countdown-value" data-ref="hours">0</span>
+            <span class="countdown-value" ref="hours">0</span>
             <span class="countdown-label">hours</span>
           </div>
           <div class="countdown-item">
-            <span class="countdown-value" data-ref="minutes">0</span>
+            <span class="countdown-value" ref="minutes">0</span>
             <span class="countdown-label">minutes</span>
           </div>
           <div class="countdown-item">
-            <span class="countdown-value" data-ref="seconds">0</span>
+            <span class="countdown-value" ref="seconds">0</span>
             <span class="countdown-label">seconds</span>
           </div>
         </div>
 
         <p class="age-verification-error-subtitle">{{ settings.age_verification_error_subtitle }}</p>
 
-        <button type="button" class="age-verification-retry button button--secondary" data-ref="retryButton">
+        <button type="button" class="age-verification-retry button button--secondary" ref="retryButton">
           {{ settings.age_verification_retry_text }}
         </button>
       </div>
