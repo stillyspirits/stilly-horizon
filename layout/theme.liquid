@@ -32,6 +32,8 @@
       {%- render 'theme-editor' -%}
     {% endif %}
 
+    {%- render 'microdata-schema' -%}
+
     {{ content_for_header }}
   </head>
 
@@ -65,6 +67,10 @@
 
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
+    {% endif %}
+
+    {% if settings.age_verification_enabled %}
+      {% render 'age-verification-modal' %}
     {% endif %}
   </body>
 </html>

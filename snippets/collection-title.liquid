@@ -1,0 +1,37 @@
+{% comment %}
+  Collection Title Snippet
+  
+  Usage:
+    {% render 'collection-title', prefix: true, include_tags: false %}
+  
+  Parameters:
+    - prefix: (optional) Whether to include a prefix like "Collection: "
+    - include_tags: (optional) Whether to include collection tags in the title
+    - collection_obj: (optional) Specific collection object to use, defaults to current collection
+{% endcomment %}
+
+{%- liquid
+  assign target_collection = collection_obj | default: collection
+  assign show_prefix = prefix | default: false
+  assign show_tags = include_tags | default: false
+  
+  if target_collection == blank
+    echo ''
+    return
+  endif
+  
+  capture output_title
+    if show_prefix
+      echo 'Collection: '
+    endif
+    
+    echo target_collection.title
+    
+    if show_tags and target_collection.all_tags.size > 0
+      echo ' - '
+      echo target_collection.all_tags | join: ', '
+    endif
+  endcapture
+  
+  echo output_title
+-%}

@@ -1,0 +1,36 @@
+{% comment %}
+  Product Title Snippet
+  
+  Usage:
+    {% render 'product-title', product: product, prefix: false, include_tags: false %}
+  
+  Parameters:
+    - product: The product object to get the title from
+    - prefix: (optional) Whether to include a prefix like "Product: "
+    - include_tags: (optional) Whether to include product tags in the title
+{% endcomment %}
+
+{%- liquid
+  if product == blank
+    echo ''
+    return
+  endif
+  
+  assign show_prefix = prefix | default: false
+  assign show_tags = include_tags | default: false
+  
+  capture output_title
+    if show_prefix
+      echo 'Product: '
+    endif
+    
+    echo product.title
+    
+    if show_tags and product.tags.size > 0
+      echo ' - '
+      echo product.tags | join: ', '
+    endif
+  endcapture
+  
+  echo output_title
+-%}
