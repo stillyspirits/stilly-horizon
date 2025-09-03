@@ -1,6 +1,8 @@
-<script type="application/ld+json">
-  {{ section.settings.product | structured_data }}
-</script>
+{%- if section.settings.product != blank -%}
+  <script type="application/ld+json">
+    {{ section.settings.product | structured_data }}
+  </script>
+{%- endif -%}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div

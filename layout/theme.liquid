@@ -69,8 +69,11 @@
       {% render 'quick-add-modal' %}
     {% endif %}
 
-    {% if settings.age_verification_enabled %}
-      {% render 'age-verification-modal' %}
-    {% endif %}
+    {% comment %}
+      Temporarily disabled for debugging
+      {% if settings.age_verification_enabled %}
+        {% render 'age-verification-modal' %}
+      {% endif %}
+    {% endcomment %}
   </body>
 </html>

@@ -2279,6 +2279,118 @@
     ]
   },
   {
+    "name": "Age Verification",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "age_verification_enabled",
+        "label": "Enable Age Verification",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "age_verification_minimum_age",
+        "label": "Minimum Age",
+        "min": 18,
+        "max": 25,
+        "step": 1,
+        "default": 21,
+        "unit": "yrs"
+      },
+      {
+        "type": "range",
+        "id": "age_verification_cookie_days",
+        "label": "Remember verification for (days)",
+        "min": 1,
+        "max": 90,
+        "step": 1,
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "Visual Settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "age_verification_logo",
+        "label": "Age Verification Logo",
+        "info": "Logo displayed in the age verification modal"
+      },
+      {
+        "type": "range",
+        "id": "age_verification_logo_width",
+        "label": "Logo Width",
+        "min": 50,
+        "max": 300,
+        "step": 10,
+        "default": 150,
+        "unit": "px"
+      },
+      {
+        "type": "header",
+        "content": "Text Content"
+      },
+      {
+        "type": "text",
+        "id": "age_verification_title",
+        "label": "Main Title",
+        "default": "You must be of legal drinking age to enter this site."
+      },
+      {
+        "type": "text",
+        "id": "age_verification_subtitle",
+        "label": "Subtitle",
+        "default": "Please enter your date of birth"
+      },
+      {
+        "type": "text",
+        "id": "age_verification_button_text",
+        "label": "Submit Button Text",
+        "default": "Enter"
+      },
+      {
+        "type": "text",
+        "id": "age_verification_error_title",
+        "label": "Underage Error Title",
+        "default": "Hold Tight! It'll be worth the wait!"
+      },
+      {
+        "type": "text",
+        "id": "age_verification_error_subtitle",
+        "label": "Countdown Subtitle",
+        "default": "Until we can let you in"
+      },
+      {
+        "type": "text",
+        "id": "age_verification_retry_text",
+        "label": "Retry Button Text",
+        "default": "Let's Try This Again"
+      },
+      {
+        "type": "richtext",
+        "id": "age_verification_footer_text",
+        "label": "Footer Disclaimer",
+        "default": "<p>Please Drink Responsibly</p>"
+      },
+      {
+        "type": "richtext",
+        "id": "age_verification_disclaimer",
+        "label": "Legal Disclaimer",
+        "default": "<p>This site is intended for those of legal drinking age. By visiting this website, you affirm that you are of legal drinking age in the country where the site is being accessed.</p>"
+      },
+      {
+        "type": "checkbox",
+        "id": "age_verification_show_terms",
+        "label": "Show Terms and Privacy Links",
+        "default": true
+      }
+    ]
+  },
+  {
     "name": "t:names.variant_pickers",
     "settings": [
       {

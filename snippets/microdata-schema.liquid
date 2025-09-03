@@ -541,14 +541,15 @@
   {%- endcapture -%}
 {%- endif -%}
 
-{% if main_entity_microdata != blank %}
+{%- assign main_entity_microdata_stripped = main_entity_microdata | strip -%}
+{%- if main_entity_microdata_stripped != blank -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       {{ main_entity_microdata }}
     }
   </script>
-{% endif %}
+{%- endif -%}
 
 {%- comment -%}Breadcrumb Schema - Add to pages with breadcrumbs{%- endcomment -%}
 {%- unless template.name == 'index' or template.name == 'cart' -%}
@@ -633,12 +634,14 @@
     ]
   {%- endcapture -%}
 
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      {{ breadcrumb_schema }}
-    }
-  </script>
+  {%- if breadcrumb_schema != blank -%}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        {{ breadcrumb_schema }}
+      }
+    </script>
+  {%- endif -%}
 {%- endunless -%}
 
 {%- comment -%}FAQ Schema - Multiple content source support{%- endcomment -%}
