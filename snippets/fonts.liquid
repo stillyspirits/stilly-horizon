@@ -1,3 +1,28 @@
+{%- comment -%}
+  Preload custom Interstate fonts
+{%- endcomment -%}
+<link
+  rel="preload"
+  as="font"
+  href="{{ 'font-interstate_condensed_regular.woff2' | asset_url }}"
+  type="font/woff2"
+  crossorigin
+>
+<link
+  rel="preload"
+  as="font"
+  href="{{ 'font-interstate_condensed_bold.woff2' | asset_url }}"
+  type="font/woff2"
+  crossorigin
+>
+<link
+  rel="preload"
+  as="font"
+  href="{{ 'font-interstate_bold_condensed_regular.woff2' | asset_url }}"
+  type="font/woff2"
+  crossorigin
+>
+
 {%- unless settings.type_body_font.system?
   and settings.type_subheading_font.system?
   and settings.type_heading_font.system?
@@ -47,3 +72,78 @@
   >
 {%- endunless -%}
 {% # theme-check-enable %}
+
+
+{% comment %}
+@font-face {
+  font-family: 'InterstateCondensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('{{ 'font-interstate_black_condensed_regular.woff2' | asset_url }}') format('woff2'),
+      url('{{ 'font-interstate_black_condensed_regular.woff' | asset_url }}') format('woff2');
+}
+
+@font-face {
+  font-family: 'InterstateCondensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('{{ 'font-interstate_bold_condensed_regular.woff2' | asset_url }}') format('woff2'),
+      url('{{ 'font-interstate_bold_condensed_regular.woff' | asset_url }}') format('woff2');
+}
+
+@font-face {
+  font-family: 'InterstateCondensed';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('{{ 'font-interstate_condensed_bold.woff2' | asset_url }}') format('woff2'),
+      url('{{ 'font-interstate_condensed_bold.woff' | asset_url }}') format('woff2');
+}
+
+@font-face {
+  font-family: 'InterstateCondensed';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('{{ 'font-interstate_condensed_regular.woff2' | asset_url }}') format('woff2'),
+      url('{{ 'font-interstate_condensed_regular.woff' | asset_url }}') format('woff2');
+}
+
+@font-face {
+  font-family: 'InterstateCondensed';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('{{ 'font-interstate_light_condensed_regular.woff2' | asset_url }}') format('woff2'),
+      url('{{ 'font-interstate_light_condensed_regular.woff' | asset_url }}') format('woff2');
+}
+
+@font-face {
+  font-family: 'Interstate';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('{{ 'font-interstate_bold.woff2' | asset_url }}') format('woff2'),
+      url('{{ 'font-interstate_bold.woff' | asset_url }}') format('woff2');
+}
+
+@font-face {
+  font-family: 'Interstate';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('{{ 'font-interstate_regular.woff2' | asset_url }}') format('woff2'),
+      url('{{ 'font-interstate_regular.woff' | asset_url }}') format('woff2');
+}
+
+@font-face {
+  font-family: 'Interstate';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('{{ 'font-interstate_light.woff2' | asset_url }}') format('woff2'),
+      url('{{ 'font-interstate_light.woff' | asset_url }}') format('woff2');
+}
+{% endcomment %}

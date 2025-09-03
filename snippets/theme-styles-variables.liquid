@@ -50,6 +50,10 @@
   {% endif %}
 
   :root {
+    /* Custom Interstate Fonts */
+    --font-interstate-condensed: 'InterstateCondensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-interstate: 'Interstate', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    
     /* Page Layout */
     --sidebar-width: 25rem;
     --narrow-content-width: 36rem;
@@ -81,18 +85,32 @@
     --letter-spacing-md: 0.13em;
 
     /* Font families */
-    --font-body--family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
-    --font-body--style: {{ settings.type_body_font.style }};
-    --font-body--weight: {{ settings.type_body_font.weight }};
-    --font-subheading--family: {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
-    --font-subheading--style: {{ settings.type_subheading_font.style }};
-    --font-subheading--weight: {{ settings.type_subheading_font.weight }};
-    --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
-    --font-heading--style: {{ settings.type_heading_font.style }};
-    --font-heading--weight: {{ settings.type_heading_font.weight }};
-    --font-accent--family: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
-    --font-accent--style: {{ settings.type_accent_font.style }};
-    --font-accent--weight: {{ settings.type_accent_font.weight }};
+    --font-body--family: var(--font-interstate-condensed);
+    --font-body--style: normal;
+    --font-body--weight: 400;
+    --font-subheading--family: var(--font-interstate-condensed);
+    --font-subheading--style: normal;
+    --font-subheading--weight: 500;
+    --font-heading--family: var(--font-interstate-condensed);
+    --font-heading--style: normal;
+    --font-heading--weight: 600;
+    --font-accent--family: var(--font-interstate-condensed);
+    --font-accent--style: normal;
+    --font-accent--weight: 700;
+    
+    /* Original theme font settings (fallback) */
+    --font-body--family-theme: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-body--style-theme: {{ settings.type_body_font.style }};
+    --font-body--weight-theme: {{ settings.type_body_font.weight }};
+    --font-subheading--family-theme: {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
+    --font-subheading--style-theme: {{ settings.type_subheading_font.style }};
+    --font-subheading--weight-theme: {{ settings.type_subheading_font.weight }};
+    --font-heading--family-theme: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+    --font-heading--style-theme: {{ settings.type_heading_font.style }};
+    --font-heading--weight-theme: {{ settings.type_heading_font.weight }};
+    --font-accent--family-theme: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
+    --font-accent--style-theme: {{ settings.type_accent_font.style }};
+    --font-accent--weight-theme: {{ settings.type_accent_font.weight }};
 
     /* Margin sizes */
     --font-h1--spacing: 0.25em;
