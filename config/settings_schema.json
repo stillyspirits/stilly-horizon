@@ -2371,6 +2371,17 @@
         "default": "Let's Try This Again"
       },
       {
+        "type": "header",
+        "content": "Theme Editor Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "age_verification_show_in_editor",
+        "label": "Show modal automatically in theme editor",
+        "default": false,
+        "info": "When enabled, the age verification modal will appear automatically in the theme editor. When disabled, use the test button to preview."
+      },
+      {
         "type": "richtext",
         "id": "age_verification_footer_text",
         "label": "Footer Disclaimer",

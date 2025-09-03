@@ -18,14 +18,24 @@ class AgeVerificationModal extends DialogComponent {
     // Get configuration from data attributes
     this.minimumAge = parseInt(this.dataset.minimumAge || '21');
     this.cookieDays = parseInt(this.dataset.cookieDays || '30');
+    this.showInEditor = this.dataset.showInEditor === 'true';
     
-    // Check if user has already been verified
-    if (!this.hasVerifiedAge()) {
+    // Check if we're in the theme editor
+    const isThemeEditor = window.Shopify?.designMode;
+    
+    // Only auto-show if not in theme editor and user hasn't been verified
+    if (!isThemeEditor && !this.hasVerifiedAge()) {
       // Show modal after a short delay to ensure page is loaded
       setTimeout(() => this.showDialog(), 100);
     }
     
+    // In theme editor, only show if explicitly requested
+    if (isThemeEditor && this.showInEditor && !this.hasVerifiedAge()) {
+      setTimeout(() => this.showDialog(), 100);
+    }
+    
     this.attachEventListeners();
+    this.attachThemeEditorListeners();
   }
   
   disconnectedCallback() {
@@ -235,6 +245,38 @@ class AgeVerificationModal extends DialogComponent {
   closeDialog() {
     super.closeDialog();
     document.body.classList.remove('age-verification-active');
+  }
+  
+  attachThemeEditorListeners() {
+    if (!window.Shopify?.designMode) return;
+    
+    // Listen for theme editor events to open modal for testing
+    document.addEventListener('age-verification:open', () => {
+      this.showDialog();
+    });
+    
+    // Save state for theme editor refreshes
+    window.addEventListener('beforeunload', () => {
+      if (this.refs.dialog?.open) {
+        sessionStorage.setItem('editor-age-verification-open', 'true');
+      } else {
+        sessionStorage.removeItem('editor-age-verification-open');
+      }
+    });
+    
+    // Restore state after theme editor refresh
+    if (sessionStorage.getItem('editor-age-verification-open') === 'true') {
+      setTimeout(() => {
+        if (!this.refs.dialog?.open) {
+          this.showDialog();
+        }
+      }, 200);
+    }
+  }
+  
+  // Method for manual testing in theme editor
+  openForTesting() {
+    this.showDialog();
   }
 }
 

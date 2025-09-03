@@ -213,6 +213,24 @@ if (window.Shopify?.designMode && !isIOS) {
         },
       },
       {
+        name: 'age-verification',
+        selector: 'age-verification-modal',
+        matches(el) {
+          return !!el.closest(this.selector);
+        },
+        isOpen: (el) => {
+          // @ts-ignore
+          return el.refs?.dialog?.open || false;
+        },
+        open: (el) => {
+          // @ts-ignore
+          if (el.openForTesting) {
+            // @ts-ignore
+            el.openForTesting();
+          }
+        },
+      },
+      {
         name: 'local-pickup-modal',
         selector: '.pickup-location__dialog',
         matches(el) {

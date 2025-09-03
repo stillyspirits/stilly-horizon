@@ -5,7 +5,19 @@
   - Stores verification in a cookie to remember users
 {% endcomment %}
 
-<age-verification-modal class="age-verification-modal" data-minimum-age="{{ settings.age_verification_minimum_age }}" data-cookie-days="{{ settings.age_verification_cookie_days }}">
+{% if request.design_mode %}
+  <div class="age-verification-test-trigger" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: #333; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: system-ui;">
+    <button type="button" onclick="document.querySelector('age-verification-modal')?.openForTesting()" style="background: none; border: none; color: white; cursor: pointer;">
+      🔞 Test Age Verification
+    </button>
+  </div>
+{% endif %}
+
+<age-verification-modal 
+  class="age-verification-modal" 
+  data-minimum-age="{{ settings.age_verification_minimum_age }}" 
+  data-cookie-days="{{ settings.age_verification_cookie_days }}"
+  data-show-in-editor="{{ settings.age_verification_show_in_editor | default: false }}">
   <dialog ref="dialog" class="age-verification-dialog">
     <div class="age-verification-content">
       {% if settings.age_verification_logo %}
