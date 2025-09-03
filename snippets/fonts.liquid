@@ -23,6 +23,7 @@
   crossorigin
 >
 
+{% comment %}
 {%- unless settings.type_body_font.system?
   and settings.type_subheading_font.system?
   and settings.type_heading_font.system?
@@ -72,7 +73,7 @@
   >
 {%- endunless -%}
 {% # theme-check-enable %}
-
+{% endcomment %}
 
 {% comment %}
 @font-face {

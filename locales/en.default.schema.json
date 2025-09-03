@@ -953,7 +953,8 @@
     "scroll_speed": "Time to next announcement",
     "search": "Search",
     "search_icon": "Search icon",
-    // Setting for search bar placement in header
+    "cart_icon": "Cart icon",
+    "account_icon": "Account icon",
     "search_position": "Position",
     "search_row": "Row",
     "row_height": "Row height",

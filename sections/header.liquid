@@ -58,7 +58,7 @@
   endcapture
 
   capture actions
-    render 'header-actions'
+    render 'header-actions', show_cart: section.settings.show_cart, show_account: section.settings.show_account
   endcapture
 
   if shop.customer_accounts_enabled
@@ -702,6 +702,18 @@
       "type": "checkbox",
       "id": "show_search",
       "label": "t:settings.search_icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "t:settings.cart_icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "t:settings.account_icon",
       "default": true
     },
     {

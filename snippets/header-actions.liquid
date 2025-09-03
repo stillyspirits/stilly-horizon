@@ -4,24 +4,39 @@
   fetchpriority="low"
 ></script>
 
+{%- comment -%}
+  Parameters:
+  - show_cart: boolean (default: true) - whether to show the cart icon
+  - show_account: boolean (default: true) - whether to show the account icon
+{%- endcomment -%}
+
+{%- if show_cart == nil -%}
+  {%- assign show_cart = true -%}
+{%- endif -%}
+{%- if show_account == nil -%}
+  {%- assign show_account = true -%}
+{%- endif -%}
+
 <header-actions
   {{- block.shopify_attributes -}}
 >
-  {% if shop.customer_accounts_enabled %}
+  {% if show_account and shop.customer_accounts_enabled %}
     {% render 'account-popover' %}
     {% render 'account-drawer' %}
   {% endif %}
 
-  {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
-    {% render 'cart-drawer' %}
-  {% else %}
-    <a
-      href="{{ routes.cart_url }}"
-      class="header-actions__action action__cart"
-      aria-label="{{ 'accessibility.cart' | t }} {{ 'accessibility.cart_count' | t }}: {{ cart.item_count }}"
-    >
-      {% render 'cart-icon-component' %}
-    </a>
+  {% if show_cart %}
+    {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
+      {% render 'cart-drawer' %}
+    {% else %}
+      <a
+        href="{{ routes.cart_url }}"
+        class="header-actions__action action__cart"
+        aria-label="{{ 'accessibility.cart' | t }} {{ 'accessibility.cart_count' | t }}: {{ cart.item_count }}"
+      >
+        {% render 'cart-icon-component' %}
+      </a>
+    {% endif %}
   {% endif %}
 </header-actions>
 
