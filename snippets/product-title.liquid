@@ -11,26 +11,23 @@
 {% endcomment %}
 
 {%- liquid
-  if product == blank
-    echo ''
-    return
+  if product != blank
+    assign show_prefix = prefix | default: false
+    assign show_tags = include_tags | default: false
+    
+    capture output_title
+      if show_prefix
+        echo 'Product: '
+      endif
+      
+      echo product.title
+      
+      if show_tags and product.tags.size > 0
+        echo ' - '
+        echo product.tags | join: ', '
+      endif
+    endcapture
+    
+    echo output_title
   endif
-  
-  assign show_prefix = prefix | default: false
-  assign show_tags = include_tags | default: false
-  
-  capture output_title
-    if show_prefix
-      echo 'Product: '
-    endif
-    
-    echo product.title
-    
-    if show_tags and product.tags.size > 0
-      echo ' - '
-      echo product.tags | join: ', '
-    endif
-  endcapture
-  
-  echo output_title
 -%}

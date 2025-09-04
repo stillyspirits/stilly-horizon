@@ -1,0 +1,109 @@
+{% comment %}
+  Renders a social media icon with link
+  
+  Parameters:
+  - platform: String - Social media platform name (facebook, instagram, twitter, etc.)
+  - handle: String - Username/handle for the platform
+  - size: String - Icon size (sm, md, lg) - defaults to lg
+  - url: String (optional) - Full URL override instead of constructing from handle
+{% endcomment %}
+
+{% liquid
+  # Set default size if not provided
+  if size == blank
+    assign size = 'lg'
+  endif
+  
+  # Map size to CSS variable
+  case size
+    when 'sm'
+      assign icon_size_class = 'social-icon--sm'
+    when 'md'
+      assign icon_size_class = 'social-icon--md'
+    else
+      assign icon_size_class = 'social-icon--lg'
+  endcase
+  
+  # Construct URL based on platform if not provided
+  if url == blank and handle != blank
+    case platform
+      when 'facebook'
+        assign social_url = 'https://facebook.com/' | append: handle
+      when 'instagram'
+        assign social_url = 'https://instagram.com/' | append: handle
+      when 'twitter'
+        assign social_url = 'https://x.com/' | append: handle
+      when 'tiktok'
+        assign social_url = 'https://tiktok.com/@' | append: handle
+      when 'youtube'
+        # Check if handle already has @ prefix
+        if handle contains '@'
+          assign social_url = 'https://youtube.com/' | append: handle
+        else
+          assign social_url = 'https://youtube.com/@' | append: handle
+        endif
+      when 'linkedin'
+        assign social_url = 'https://linkedin.com/company/' | append: handle
+      when 'pinterest'
+        assign social_url = 'https://pinterest.com/' | append: handle
+      else
+        assign social_url = '#'
+    endcase
+  else
+    assign social_url = url
+  endif
+%}
+
+{% if social_url != '#' and social_url != blank %}
+  <a
+    href="{{ social_url }}"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="{{ platform | capitalize }}"
+    class="social-icon-link {{ icon_size_class }}"
+  >
+    <svg
+      class="social-icon"
+      aria-hidden="true"
+      focusable="false"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+    >
+      {%- render 'icon', icon: platform -%}
+    </svg>
+  </a>
+{% endif %}
+
+{% style %}
+  .social-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .social-icon-link.social-icon--sm {
+    width: var(--icon-size-sm);
+    height: var(--icon-size-sm);
+  }
+  
+  .social-icon-link.social-icon--md {
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+  }
+  
+  .social-icon-link.social-icon--lg {
+    width: var(--icon-size-lg);
+    height: var(--icon-size-lg);
+  }
+  
+  .social-icon {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+  
+  .social-icon-link:hover .social-icon {
+    opacity: 0.7;
+  }
+{% endstyle %}

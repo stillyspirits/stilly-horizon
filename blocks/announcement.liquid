@@ -1,3 +1,4 @@
+{%- # Accept block parameter from render call -%}
 {%- assign block_settings = block.settings -%}
 {%- assign plain_text = block_settings.text | strip_newlines | strip_html | strip -%}
 {%- assign block_index = section.blocks | find_index: 'id', block.id -%}
@@ -24,9 +25,9 @@
     {{ block.shopify_attributes }}
     aria-hidden="{% if block_index == 0 %}false{% else %}true{% endif %}"
   >
-    <p class="announcement-bar__text">
+    <div class="announcement-bar__text">
       {{ block.settings.text }}
-    </p>
+    </div>
 
     {% if block_settings.link != blank %}
       <a

@@ -14,26 +14,57 @@
   {% liquid
     assign autoplay = false
     assign show_arrows = false
-    if section.blocks.size > 1
+    assign announcement_count = 0
+    
+    for block in section.blocks
+      if block.type == 'announcement'
+        assign announcement_count = announcement_count | plus: 1
+      endif
+    endfor
+    
+    if announcement_count > 1
       assign autoplay = true
       assign show_arrows = true
     endif
+
+    capture static_message
+      content_for 'block', type: 'announcement-message', id: 'announcement-message'
+    endcapture
+
+    capture social_icons
+      content_for 'block', type: 'announcement-social-icons', id: 'announcement-social-icons'
+    endcapture
   %}
 
-  <announcement-bar-component
-    class="announcement-bar__slider"
-    {% if autoplay == true %}
-      autoplay="{{ section.settings.speed }}" aria-live="polite"
-    {% endif %}
-  >
-    {% if show_arrows %}
-      {% render 'slideshow-arrows', icon_style: 'chevron' %}
-    {% endif %}
-
-    <div class="announcement-bar__slides">
-      {% content_for 'blocks' %}
+  <div class="announcement-bar__wrapper announcement-bar__wrapper--has-sides">
+    <!-- Left static area -->
+    <div class="announcement-bar__start">
+      {{ static_message }}
     </div>
-  </announcement-bar-component>
+
+    <!-- Center rotating announcements -->
+    <div class="announcement-bar__center">
+      <announcement-bar-component
+        class="announcement-bar__slider"
+        {% if autoplay == true %}
+          autoplay="{{ section.settings.speed }}" aria-live="polite"
+        {% endif %}
+      >
+        {% if show_arrows %}
+          {% render 'slideshow-arrows', icon_style: 'chevron' %}
+        {% endif %}
+
+        <div class="announcement-bar__slides">
+          {% content_for 'blocks' %}
+        </div>
+      </announcement-bar-component>
+    </div>
+
+    <!-- Right static area -->
+    <div class="announcement-bar__end">
+      {{ social_icons }}
+    </div>
+  </div>
 </aside>
 
 {% stylesheet %}
@@ -41,11 +72,57 @@
     border-block-end: var(--border-bottom-width) solid var(--color-border);
   }
 
+  .announcement-bar__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .announcement-bar__start,
+  .announcement-bar__end {
+    flex-shrink: 0;
+    display: none;
+  }
+
+  .announcement-bar__center {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  /* Show side containers on desktop when content exists */
+  @media screen and (min-width: 750px) {
+    .announcement-bar__wrapper--has-sides .announcement-bar__start,
+    .announcement-bar__wrapper--has-sides .announcement-bar__end {
+      display: flex;
+      align-items: center;
+      width: 25%;
+      flex-shrink: 0;
+    }
+    
+    .announcement-bar__wrapper--has-sides .announcement-bar__start {
+      justify-content: flex-start;
+    }
+    
+    .announcement-bar__wrapper--has-sides .announcement-bar__end {
+      justify-content: flex-end;
+    }
+    
+    .announcement-bar__wrapper--has-sides .announcement-bar__center {
+      width: 50%;
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+  }
+
   .announcement-bar__slider {
     display: flex;
     flex-direction: row;
     align-items: center;
     position: relative;
+    width: 100%;
 
     @media screen and (max-width: 749px) {
       grid-column: 1 / -1;
@@ -118,6 +195,8 @@
     position: absolute;
     inset: 0;
   }
+
+  /* Block styling is now handled by the individual blocks */
 {% endstylesheet %}
 
 {% schema %}
@@ -125,13 +204,23 @@
   "name": "t:names.announcement_bar",
   "blocks": [
     {
-      "type": "_announcement"
+      "type": "announcement"
+    },
+    {
+      "type": "announcement-message"
+    },
+    {
+      "type": "announcement-social-icons"
     }
   ],
   "enabled_on": {
     "groups": ["header"]
   },
   "settings": [
+    {
+      "type": "header",
+      "content": "Announcements"
+    },
     {
       "type": "range",
       "id": "speed",
@@ -205,9 +294,25 @@
   "presets": [
     {
       "name": "t:names.announcement_bar",
+      "settings": {},
       "blocks": {
+        "announcement-message": {
+          "type": "announcement-message",
+          "id": "announcement-message",
+          "static": true,
+          "settings": {
+            "message": "Free shipping on orders $99+"
+          }
+        },
         "announcement_1": {
-          "type": "_announcement"
+          "type": "announcement",
+          "settings": {}
+        },
+        "announcement-social-icons": {
+          "type": "announcement-social-icons",
+          "id": "announcement-social-icons",
+          "static": true,
+          "settings": {}
         }
       },
       "block_order": ["announcement_1"]

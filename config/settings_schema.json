@@ -2449,5 +2449,67 @@
         "default": "equal-width-buttons"
       }
     ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "paragraph",
+        "content": "Enter just your username or handle for each platform. Social icons will automatically appear in the announcement bar and footer when handles are provided."
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook",
+        "info": "Enter your Facebook page name",
+        "placeholder": "username"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram",
+        "info": "Enter your Instagram handle without @",
+        "placeholder": "username"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "X (Twitter)",
+        "info": "Enter your X handle without @",
+        "placeholder": "username"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok",
+        "info": "Enter your TikTok handle without @",
+        "placeholder": "username"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube",
+        "info": "Enter your YouTube handle without @",
+        "placeholder": "username"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin",
+        "label": "LinkedIn",
+        "info": "Enter your LinkedIn company name",
+        "placeholder": "username"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest",
+        "info": "Enter your Pinterest username",
+        "placeholder": "username"
+      }
+    ]
   }
 ]

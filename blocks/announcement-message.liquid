@@ -1,0 +1,107 @@
+{% liquid
+  # Accept block parameter from render call
+  assign block_settings = block.settings
+%}
+
+{% if block_settings.message != blank %}
+  <div
+    class="
+      announcement-message
+      custom-typography
+      {% if block_settings.font_size != "" %}custom-font-size{% endif %}
+    "
+    style="{% render 'typography-style', preset: 'custom', settings: block_settings %}"
+    {{ block.shopify_attributes }}
+  >
+    {{ block_settings.message }}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .announcement-message {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    padding-inline: var(--gap-md);
+    width: 100%;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Static message",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Message",
+      "default": "Free shipping on orders $99+"
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "Font size",
+      "options": [
+        {
+          "value": "0.75rem",
+          "label": "12px"
+        },
+        {
+          "value": "0.875rem",
+          "label": "14px"
+        },
+        {
+          "value": "1rem",
+          "label": "16px"
+        },
+        {
+          "value": "1.125rem",
+          "label": "18px"
+        }
+      ],
+      "default": "0.875rem"
+    },
+    {
+      "type": "select",
+      "id": "case",
+      "label": "Text case",
+      "options": [
+        {
+          "value": "none",
+          "label": "Default"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "select",
+      "id": "weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "500"
+    }
+  ]
+}
+{% endschema %}

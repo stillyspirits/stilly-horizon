@@ -15,23 +15,20 @@
   assign show_prefix = prefix | default: false
   assign show_tags = include_tags | default: false
   
-  if target_collection == blank
-    echo ''
-    return
+  if target_collection != blank
+    capture output_title
+      if show_prefix
+        echo 'Collection: '
+      endif
+      
+      echo target_collection.title
+      
+      if show_tags and target_collection.all_tags.size > 0
+        echo ' - '
+        echo target_collection.all_tags | join: ', '
+      endif
+    endcapture
+    
+    echo output_title
   endif
-  
-  capture output_title
-    if show_prefix
-      echo 'Collection: '
-    endif
-    
-    echo target_collection.title
-    
-    if show_tags and target_collection.all_tags.size > 0
-      echo ' - '
-      echo target_collection.all_tags | join: ', '
-    endif
-  endcapture
-  
-  echo output_title
 -%}

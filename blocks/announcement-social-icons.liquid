@@ -1,20 +1,21 @@
 {% liquid
-  assign block_settings = block.settings
-  # Check if we should use theme settings
-  assign use_theme_settings = block_settings.use_theme_settings | default: false
+  # Check if any social handles are configured
+  assign has_social = false
+  if settings.social_facebook != blank or settings.social_instagram != blank or settings.social_twitter != blank or settings.social_tiktok != blank or settings.social_youtube != blank or settings.social_linkedin != blank or settings.social_pinterest != blank
+    assign has_social = true
+  endif
 %}
 
-<div
-  class="social-icons__wrapper"
-  {{ block.shopify_attributes }}
->
-  {% if use_theme_settings %}
-    {% comment %}Auto-display social icons based on theme settings{% endcomment %}
+{% if has_social %}
+  <div
+    class="announcement-social-icons"
+    {{ block.shopify_attributes }}
+  >
     {% if settings.social_facebook != blank %}
       {% render 'social-icon', 
         platform: 'facebook', 
         handle: settings.social_facebook,
-        size: 'lg'
+        size: 'sm'
       %}
     {% endif %}
     
@@ -22,7 +23,7 @@
       {% render 'social-icon', 
         platform: 'instagram', 
         handle: settings.social_instagram,
-        size: 'lg'
+        size: 'sm'
       %}
     {% endif %}
     
@@ -30,7 +31,7 @@
       {% render 'social-icon', 
         platform: 'twitter', 
         handle: settings.social_twitter,
-        size: 'lg'
+        size: 'sm'
       %}
     {% endif %}
     
@@ -38,7 +39,7 @@
       {% render 'social-icon', 
         platform: 'tiktok', 
         handle: settings.social_tiktok,
-        size: 'lg'
+        size: 'sm'
       %}
     {% endif %}
     
@@ -46,7 +47,7 @@
       {% render 'social-icon', 
         platform: 'youtube', 
         handle: settings.social_youtube,
-        size: 'lg'
+        size: 'sm'
       %}
     {% endif %}
     
@@ -54,7 +55,7 @@
       {% render 'social-icon', 
         platform: 'linkedin', 
         handle: settings.social_linkedin,
-        size: 'lg'
+        size: 'sm'
       %}
     {% endif %}
     
@@ -62,46 +63,25 @@
       {% render 'social-icon', 
         platform: 'pinterest', 
         handle: settings.social_pinterest,
-        size: 'lg'
+        size: 'sm'
       %}
     {% endif %}
-  {% else %}
-    {% comment %}Use custom block-level social links{% endcomment %}
-    {% content_for 'blocks' %}
-  {% endif %}
-</div>
+  </div>
+{% endif %}
 
 {% stylesheet %}
-  .social-icons__wrapper {
+  .announcement-social-icons {
     display: flex;
-    gap: var(--gap-sm);
-    flex-wrap: wrap;
-    justify-content: center;
-
-    @media screen and (min-width: 750px) {
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-    }
+    align-items: center;
+    gap: var(--gap-xs);
+    padding-inline: var(--gap-md);
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:names.social_media_links",
+  "name": "Social icons",
   "tag": null,
-  "settings": [
-    {
-      "type": "checkbox",
-      "id": "use_theme_settings",
-      "label": "Use theme social media settings",
-      "info": "When enabled, social icons will automatically display based on handles configured in theme settings. When disabled, you can add custom social links.",
-      "default": true
-    }
-  ],
-  "blocks": [
-    {
-      "type": "_social-link"
-    }
-  ]
+  "settings": []
 }
 {% endschema %}
