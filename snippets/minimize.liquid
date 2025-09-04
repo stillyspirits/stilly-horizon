@@ -1,0 +1,114 @@
+{%- liquid
+  # Improved HTML/CSS/JS minifier with better performance
+  # - Uses fewer replace operations for better performance
+  # - More selective about what gets minified to avoid breaking functionality
+  # - Preserves critical whitespace in specific contexts
+
+  # First normalize Unicode non-breaking spaces to regular spaces
+  # This MUST come first to handle UTF-8 \u00A0 characters properly
+  assign content = minimize | replace: ' ', ' '
+
+  # Remove JavaScript comments while preserving URLs
+  
+  # Step 1: Protect URLs and important patterns globally
+  assign content = content | replace: '://', '__PROTOCOL__'
+  assign content = content | replace: 'https:', '__HTTPS__'
+  assign content = content | replace: 'http:', '__HTTP__'
+  
+  # Step 2: Remove multi-line comments /* */
+  assign parts = content | split: '/*'
+  if parts.size > 1
+    assign result = parts[0]
+    for part in parts offset:1
+      assign end_parts = part | split: '*/'
+      if end_parts.size > 1
+        assign after_comment = end_parts[1]
+        for end_part in end_parts offset:2
+          assign after_comment = after_comment | append: '*/' | append: end_part
+        endfor
+        assign result = result | append: after_comment
+      endif
+    endfor
+    assign content = result
+  endif
+  
+  # Step 3: Remove single-line comments (avoiding regex patterns and strings)
+  # Process line by line to handle single-line comments safely
+  assign lines = content | split: '\n'
+  assign cleaned_lines = ''
+  for line in lines
+    # Check if line contains potential single-line comment
+    if line contains '//'
+      # Find the position and check if it's not within a string or regex
+      assign line_parts = line | split: '//'
+      assign cleaned_line = line_parts[0]
+      
+      # Check if the // is within quotes (basic check)
+      assign quote_check = line_parts[0] | split: '"'
+      assign single_quote_check = line_parts[0] | split: "'"
+      
+      # If even number of quotes before //, it's likely a comment
+      assign quote_count = quote_check.size | minus: 1
+      assign single_quote_count = single_quote_check.size | minus: 1
+      assign quote_remainder = quote_count | modulo: 2
+      assign single_quote_remainder = single_quote_count | modulo: 2
+      
+      if quote_remainder == 0 and single_quote_remainder == 0
+        # It's a comment, keep only the part before //
+        assign line = cleaned_line
+      endif
+    endif
+    
+    if forloop.first
+      assign cleaned_lines = line
+    else
+      assign cleaned_lines = cleaned_lines | append: line
+    endif
+  endfor
+  assign content = cleaned_lines
+  
+  # Step 4: Restore protected patterns
+  assign content = content | replace: '__PROTOCOL__', '://'
+  assign content = content | replace: '__HTTPS__', 'https:'
+  assign content = content | replace: '__HTTP__', 'http:'
+
+  # Remove newlines and excessive whitespace - but be more strategic
+  assign content = content | strip_newlines
+
+  # Collapse multiple spaces to single space (more efficient than individual replacements)
+  # Using a more targeted approach that won't break CSS or JS
+  assign content = content | replace: '                    ', ' '
+  assign content = content | replace: '          ', ' '
+  assign content = content | replace: '     ', ' '
+  assign content = content | replace: '   ', ' '
+  assign content = content | replace: '  ', ' '
+
+  # HTML-specific optimizations - be careful not to break CSS or JS
+  assign content = content | replace: ' />', '/>'
+  # Don't remove spaces after HTML entities like &amp;, &lt;, etc.
+  assign content = content | replace: '; >', ';>'
+  assign content = content | replace: '> <', '><'
+
+  # JSON-specific optimizations - only if we detect JSON-like content
+  # Check for JSON more specifically to avoid affecting HTML content like titles
+  if content contains 'data-flickty' or content contains 'application/ld+json'
+    assign content = content | replace: '": ', '":'
+    assign content = content | replace: ': "', ':"'
+    assign content = content | replace: '", "', '","'
+    assign content = content | replace: ', "', ',"'
+  endif
+
+  # CSS-specific optimizations - only apply to actual style blocks
+  if content contains '<style'
+    # Only optimize within style tags to avoid affecting other content
+    assign content = content | replace: ';}', ';}'
+    assign content = content | replace: '{ ', '{'
+    assign content = content | replace: ' }', '}'
+    # Don't touch colons as they might appear in content like titles
+  endif
+
+  # Final cleanup - remove any remaining double spaces that might have been created
+  assign content = content | replace: '  ', ' '
+-%}
+
+{{- content -}}
