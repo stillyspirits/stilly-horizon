@@ -14,38 +14,24 @@
     "header_announcements_HRy7qH": {
       "type": "header-announcements",
       "blocks": {
-        "announcement_Bx9fUc": {
-          "type": "_announcement",
+        "announcement-message": {
+          "type": "announcement-message",
+          "static": true,
           "settings": {
-            "text": "Annoucement 1",
-            "link": "",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "weight": "",
-            "letter_spacing": "normal",
-            "case": "none"
+            "message": "",
+            "font_size": "0.875rem",
+            "case": "uppercase",
+            "weight": "500"
           },
           "blocks": {}
         },
-        "announcement_3YCbLF": {
-          "type": "_announcement",
-          "name": "t:names.announcement",
-          "settings": {
-            "text": "Announcement 2",
-            "link": "",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "weight": "",
-            "letter_spacing": "normal",
-            "case": "none"
-          },
+        "announcement-social-icons": {
+          "type": "announcement-social-icons",
+          "static": true,
+          "settings": {},
           "blocks": {}
         }
       },
-      "block_order": [
-        "announcement_Bx9fUc",
-        "announcement_3YCbLF"
-      ],
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
