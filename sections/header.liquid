@@ -1,8 +1,8 @@
 {% liquid
-  assign order = 'logo,menu,localization,search,mobile_search,actions'
+  assign order = 'logo,menu,menu_right,localization,search,mobile_search,actions'
 
   if shop.customer_accounts_enabled
-    assign order = 'mobile_search,logo,menu,localization,search,actions'
+    assign order = 'mobile_search,logo,menu,menu_right,localization,search,actions'
   endif
 
   assign rows = 'top,bottom' | split: ','
@@ -49,6 +49,10 @@
     content_for 'block', type: '_header-menu', id: 'header-menu'
   endcapture
 
+  capture menu_right
+    content_for 'block', type: '_header-menu', id: 'header-menu-right'
+  endcapture
+
   capture mobile_menu
     content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile'
   endcapture
@@ -67,9 +71,9 @@
 
   if section.settings.search_position == 'left'
     if shop.customer_accounts_enabled
-      assign order = 'mobile_search,logo,search,menu,localization,actions'
+      assign order = 'mobile_search,logo,search,menu,menu_right,localization,actions'
     else
-      assign order = 'logo,search,menu,localization,mobile_search,actions'
+      assign order = 'logo,search,menu,menu_right,localization,mobile_search,actions'
     endif
   endif
   capture search
@@ -207,6 +211,7 @@
         first: first,
         logo: logo,
         menu: menu,
+        menu_right: menu_right,
         actions: actions,
         localization: localization_markup,
         search: search,
