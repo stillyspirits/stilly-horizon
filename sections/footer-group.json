@@ -219,7 +219,7 @@
               "blocks": {}
             }
           },
-          "block_order": ["copyright", "policy_list", "social_icons"]
+          "block_order": []
         }
       },
       "block_order": [
