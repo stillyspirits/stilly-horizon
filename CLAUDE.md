@@ -127,3 +127,4 @@ The theme uses a modern component-based architecture with:
 - `money` - Format prices
 - `t` - Translate strings
 - `json` - Convert to JSON for JavaScript consumption
+- Always use the shopify-theme-expert agent for Shopify theme development, Liquid templating, theme architecture, performance optimization, and debugging Shopify-specific issues
