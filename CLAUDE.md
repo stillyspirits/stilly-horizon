@@ -58,10 +58,10 @@ The theme uses a modern component-based architecture with:
 3. **Component Pattern**:
    ```javascript
    import { Component } from '@theme/component';
-   
+
    class MyComponent extends Component {
      requiredRefs = ['elementName'];
-     
+
      connectedCallback() {
        super.connectedCallback();
        // Component initialization
@@ -80,7 +80,7 @@ The theme uses a modern component-based architecture with:
 ### Custom Components
 
 #### Age Verification Modal
-- **Files**: 
+- **Files**:
   - `snippets/age-verification-modal.liquid`
   - `assets/age-verification-modal.js`
   - `assets/age-verification.css`
@@ -101,7 +101,7 @@ The theme uses a modern component-based architecture with:
 
 1. **No Package Manager**: This theme doesn't use npm/yarn. JavaScript is vanilla ES6+ with module imports.
 
-2. **Theme Check**: Always run `shopify theme check` before committing changes.
+2. **Theme Check**: Always run `shopify theme check` after editing a group of files and before committing changes.
 
 3. **Performance First**: Follow progressive enhancement principles - functionality should work without JavaScript where possible.
 
