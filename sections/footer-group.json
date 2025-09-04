@@ -213,16 +213,13 @@
               "blocks": {}
             },
             "social_icons": {
-              "type": "_footer-social-icons",
+              "type": "footer-social-icons",
               "static": true,
-              "settings": {
-                "use_theme_settings": true
-              },
-              "blocks": {},
-              "block_order": []
+              "settings": {},
+              "blocks": {}
             }
           },
-          "block_order": []
+          "block_order": ["copyright", "policy_list", "social_icons"]
         }
       },
       "block_order": [
