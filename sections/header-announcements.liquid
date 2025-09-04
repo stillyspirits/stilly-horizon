@@ -1,4 +1,29 @@
-{% if section.blocks.size > 1 %}
+{% liquid
+  assign autoplay = false
+  assign show_arrows = false
+  assign announcement_count = 0
+  
+  for block in section.blocks
+    if block.type == '@theme'
+      assign block_id_parts = block.id | split: '__'
+      if block_id_parts.size > 1
+        assign block_type_name = block_id_parts[1] | split: '_' | first
+        if block_type_name == 'announcement'
+          assign announcement_count = announcement_count | plus: 1
+        endif
+      endif
+    elsif block.type == 'announcement'
+      assign announcement_count = announcement_count | plus: 1
+    endif
+  endfor
+  
+  if announcement_count > 1
+    assign autoplay = true
+    assign show_arrows = true
+  endif
+%}
+
+{% if announcement_count > 1 %}
   <script
     src="{{ 'announcement-bar.js' | asset_url }}"
     type="module"
@@ -12,21 +37,6 @@
   style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;"
 >
   {% liquid
-    assign autoplay = false
-    assign show_arrows = false
-    assign announcement_count = 0
-    
-    for block in section.blocks
-      if block.type == 'announcement'
-        assign announcement_count = announcement_count | plus: 1
-      endif
-    endfor
-    
-    if announcement_count > 1
-      assign autoplay = true
-      assign show_arrows = true
-    endif
-
     capture static_message
       content_for 'block', type: 'announcement-message', id: 'announcement-message'
     endcapture
