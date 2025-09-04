@@ -215,56 +215,11 @@
             "social_icons": {
               "type": "_footer-social-icons",
               "static": true,
-              "settings": {},
-              "blocks": {
-                "social_link_insta": {
-                  "type": "_social-link",
-                  "name": "Instagram",
-                  "settings": {
-                    "link": "https://www.instagram.com/shopify"
-                  },
-                  "blocks": {}
-                },
-                "social_link_threads": {
-                  "type": "_social-link",
-                  "name": "Threads",
-                  "settings": {
-                    "link": "https://www.threads.net/@shopify"
-                  },
-                  "blocks": {}
-                },
-                "social_link_tiktok": {
-                  "type": "_social-link",
-                  "name": "TikTok",
-                  "settings": {
-                    "link": "https://www.tiktok.com/@shopify"
-                  },
-                  "blocks": {}
-                },
-                "social_link_twitter": {
-                  "type": "_social-link",
-                  "name": "Twitter",
-                  "settings": {
-                    "link": "https://www.twitter.com/shopify"
-                  },
-                  "blocks": {}
-                },
-                "social_link_youtube": {
-                  "type": "_social-link",
-                  "name": "YouTube",
-                  "settings": {
-                    "link": "https://www.youtube.com/shopify"
-                  },
-                  "blocks": {}
-                }
+              "settings": {
+                "use_theme_settings": true
               },
-              "block_order": [
-                "social_link_insta",
-                "social_link_threads",
-                "social_link_tiktok",
-                "social_link_twitter",
-                "social_link_youtube"
-              ]
+              "blocks": {},
+              "block_order": []
             }
           },
           "block_order": []
