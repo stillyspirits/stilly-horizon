@@ -233,7 +233,7 @@
     class="hero__container spacing-style section section--full-width"
     style="      {% render 'spacing-style', settings: section.settings %}"
   >
-    {%- if section.settings.link != blank -%}
+    {%- if section.settings.link != blank and section.settings.link != "" and section.settings.link != nil -%}
       <a
         href="{{ section.settings.link }}"
         class="hero__link"
@@ -547,7 +547,8 @@
     {
       "type": "url",
       "id": "link",
-      "label": "t:settings.link"
+      "label": "t:settings.link",
+      "info": "Leave empty for no link. Clear the field to remove the link."
     },
     {
       "type": "checkbox",
