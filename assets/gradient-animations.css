@@ -1,0 +1,182 @@
+/* Gradient Animation Keyframes */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes gradient-diagonal {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-background,
+  .gradient-text {
+    animation: none !important;
+  }
+}
+
+/* Gradient utility classes */
+.gradient-background {
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-text {
+  display: inline-block;
+  background-size: 200% auto;
+  font-weight: bold;
+  /* Ensure text remains visible even if gradient fails */
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  /* Better rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Make gradient text more prominent */
+h1.gradient-text,
+h2.gradient-text,
+h3.gradient-text {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Gradient text hover effect */
+.gradient-text:hover {
+  animation-play-state: paused;
+  filter: brightness(1.1);
+}
+
+/* Utility class to disable gradient on specific elements */
+.no-gradient,
+.no-gradient-text {
+  background: initial !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  -webkit-text-fill-color: initial !important;
+  color: inherit !important;
+  animation: none !important;
+}
+
+/* Optional gradient overlay for images */
+.gradient-overlay {
+  position: relative;
+}
+
+.gradient-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.gradient-overlay > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Performance optimizations */
+.gradient-background,
+.gradient-text {
+  will-change: background-position;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Additional animation variations */
+.gradient-animation-rotate {
+  animation-name: gradient-rotate !important;
+}
+
+.gradient-animation-diagonal {
+  animation-name: gradient-diagonal !important;
+}
+
+/* Pause animation on hover (optional) */
+.gradient-pause-on-hover:hover {
+  animation-play-state: paused;
+}
+
+/* Gradient border effect */
+.gradient-border {
+  position: relative;
+  background: var(--color-background);
+  padding: 2px;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+/* Smooth gradient transitions */
+.gradient-smooth {
+  transition: background-position 0.5s ease;
+}
+
+/* Text gradient fallback for better readability */
+.gradient-text-fallback {
+  position: relative;
+}
+
+.gradient-text-fallback::before {
+  content: attr(data-text);
+  position: absolute;
+  z-index: -1;
+  color: var(--color-foreground);
+  opacity: 0;
+}
+
+/* Ensure gradient text remains selectable */
+.gradient-text::selection {
+  background-color: var(--color-primary);
+  -webkit-text-fill-color: var(--color-background);
+}

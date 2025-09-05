@@ -81,6 +81,17 @@
         --font-h5--color: var(--color-foreground-heading);
         --font-h6--color: var(--color-foreground-heading);
 
+        {% comment %} Gradient custom properties {% endcomment %}
+        {% if scheme.settings.gradient_background and scheme.settings.gradient_background != blank %}
+          --gradient-background: {{ scheme.settings.gradient_background }};
+        {% endif %}
+        
+        {% if scheme.settings.gradient_text and scheme.settings.gradient_text != blank %}
+          --gradient-text: {{ scheme.settings.gradient_text }};
+        {% elsif scheme.settings.gradient_background and scheme.settings.gradient_background != blank %}
+          --gradient-text: {{ scheme.settings.gradient_background }};
+        {% endif %}
+
         /* Shadows */
         {% if settings.drawer_drop_shadow %}
           --shadow-drawer: 0px 4px 20px rgb(var(--color-shadow-rgb) / var(--opacity-15));
@@ -90,6 +101,84 @@
           --shadow-popover: 0px 4px 20px rgb(var(--color-shadow-rgb) / var(--opacity-15));
         {% endif %}
       }
+
+      {% assign animation_speed = settings.gradient_animation_speed | default: 15 %}
+      {% assign animation_enabled = settings.gradient_animation_enabled %}
+      
+      {% if scheme.settings.gradient_background and scheme.settings.gradient_background != blank %}
+        {% comment %} Gradient background styles - auto-apply to sections {% endcomment %}
+        
+        .color-{{ scheme.id }} {
+          background: var(--gradient-background) !important;
+          {% if animation_enabled %}
+            background-size: 400% 400%;
+            animation: gradient-shift {{ animation_speed }}s ease infinite;
+          {% endif %}
+        }
+        
+        .color-{{ scheme.id }}.gradient-background,
+        .color-{{ scheme.id }} .gradient-background {
+          background: var(--gradient-background);
+          {% if animation_enabled %}
+            background-size: 400% 400%;
+            animation: gradient-shift {{ animation_speed }}s ease infinite;
+          {% endif %}
+        }
+      {% endif %}
+
+      {% comment %} Gradient text styles - works independently of background {% endcomment %}
+      {% if scheme.settings.gradient_text and scheme.settings.gradient_text != blank %}
+        {% comment %} Auto-apply to all headings when text gradient is set {% endcomment %}
+        .color-{{ scheme.id }} h1,
+        .color-{{ scheme.id }} h2,
+        .color-{{ scheme.id }} h3,
+        .color-{{ scheme.id }} h4,
+        .color-{{ scheme.id }} h5,
+        .color-{{ scheme.id }} h6,
+        .color-{{ scheme.id }} .h1,
+        .color-{{ scheme.id }} .h2,
+        .color-{{ scheme.id }} .h3,
+        .color-{{ scheme.id }} .h4,
+        .color-{{ scheme.id }} .h5,
+        .color-{{ scheme.id }} .h6,
+        .color-{{ scheme.id }} jumbo-text {
+          background: var(--gradient-text);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+          {% if animation_enabled %}
+            background-size: 400% 400%;
+            animation: gradient-shift {{ animation_speed }}s ease infinite;
+          {% endif %}
+        }
+        
+        {% comment %} Also apply to elements with explicit gradient-text class {% endcomment %}
+        .color-{{ scheme.id }} .gradient-text {
+          background: var(--gradient-text);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+          {% if animation_enabled %}
+            background-size: 400% 400%;
+            animation: gradient-shift {{ animation_speed }}s ease infinite;
+          {% endif %}
+        }
+      {% elsif scheme.settings.gradient_background and scheme.settings.gradient_background != blank %}
+        {% comment %} Fallback: Use background gradient for text if only background gradient is set {% endcomment %}
+        .color-{{ scheme.id }} .gradient-text {
+          background: var(--gradient-background);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+          {% if animation_enabled %}
+            background-size: 400% 400%;
+            animation: gradient-shift {{ animation_speed }}s ease infinite;
+          {% endif %}
+        }
+      {% endif %}
   {% endfor %}
 
   {{ scheme_classes | prepend: 'body' }} {

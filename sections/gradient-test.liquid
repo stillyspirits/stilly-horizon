@@ -1,0 +1,71 @@
+<div class="section color-{{ section.settings.color_scheme }}{% if section.settings.enable_gradient %} gradient-background{% endif %}">
+  <div class="container">
+    <div style="padding: 60px 20px; text-align: center;">
+      <h2 class="h1{% if section.settings.gradient_text %} gradient-text{% endif %}">
+        {{ section.settings.heading }}
+      </h2>
+      <p style="margin-top: 20px;">{{ section.settings.description }}</p>
+      
+      {% if section.settings.show_button %}
+        <a href="#" class="button button--primary" style="margin-top: 20px;">
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gradient Test",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Gradient Background Test"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>This section demonstrates the animated gradient background feature.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_gradient",
+      "label": "Enable gradient background",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "gradient_text",
+      "label": "Apply gradient to heading",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Learn More"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-7"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gradient Test"
+    }
+  ]
+}
+{% endschema %}

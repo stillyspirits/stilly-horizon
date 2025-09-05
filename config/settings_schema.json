@@ -303,6 +303,22 @@
             "label": "t:settings.hover_borders",
             "default": "#1A1A1A",
             "alpha": true
+          },
+          {
+            "type": "header",
+            "content": "Gradient Background (Optional)"
+          },
+          {
+            "type": "color_background",
+            "id": "gradient_background",
+            "label": "Gradient background",
+            "default": "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #fda085 100%)"
+          },
+          {
+            "type": "color_background",
+            "id": "gradient_text",
+            "label": "Text gradient (optional)",
+            "info": "Applies to headings and jumbo text. Leave empty to use background gradient"
           }
         ],
         "role": {
@@ -317,6 +333,33 @@
           "on_secondary_button": "secondary_button_text",
           "secondary_button_border": "secondary_button_border"
         }
+      }
+    ]
+  },
+  {
+    "name": "Gradient Effects",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Gradient Animation"
+      },
+      {
+        "type": "checkbox",
+        "id": "gradient_animation_enabled",
+        "label": "Enable gradient animation",
+        "default": true,
+        "info": "Animate gradients when applied to backgrounds and text"
+      },
+      {
+        "type": "range",
+        "id": "gradient_animation_speed",
+        "label": "Animation speed",
+        "min": 5,
+        "max": 60,
+        "step": 5,
+        "unit": "s",
+        "default": 15,
+        "info": "Duration of one animation cycle in seconds"
       }
     ]
   },
