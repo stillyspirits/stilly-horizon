@@ -22,12 +22,16 @@
 
 {% capture style %}
   --ratio: {{ ratio }};
+  --image-fit: {{ block_settings.image_fit | default: 'cover' }};
+  --image-position: {{ block_settings.image_position | default: 'center center' }};
   {% render 'size-style', settings: block_settings %}
   {% render 'spacing-style', settings: block_settings %}
 {% endcapture %}
 
 {% capture image_border_style %}
   --ratio: {{ ratio }};
+  --image-fit: {{ block_settings.image_fit | default: 'cover' }};
+  --image-position: {{ block_settings.image_position | default: 'center center' }};
   {% render 'border-override', settings: block_settings %}
 {% endcapture %}
 
@@ -40,17 +44,19 @@
 
 {% capture image %}
   {%- if block_settings.image -%}
-    {{
-      block_settings.image
-      | image_url: width: 3840
-      | image_tag:
-        width: block_settings.image.width,
-        widths: widths,
-        height: block_settings.image.height,
-        class: 'image-block__image border-style',
-        style: image_border_style,
-        sizes: sizes
-    }}
+    <div class="image-block__wrapper" style="aspect-ratio: {{ ratio }};">
+      {{
+        block_settings.image
+        | image_url: width: 3840
+        | image_tag:
+          width: block_settings.image.width,
+          widths: widths,
+          height: block_settings.image.height,
+          class: 'image-block__image border-style',
+          style: image_border_style,
+          sizes: sizes
+      }}
+    </div>
   {%- else -%}
     <div class="placeholder-image border-style size-style" style="{{ image_border_style }}">
       {{ 'detailed-apparel-1' | placeholder_svg_tag: 'hero__image' }}
@@ -82,28 +88,46 @@
     position: relative;
     aspect-ratio: var(--ratio);
     overflow: hidden;
-  }
-
-  placeholder-image img {
     width: 100%;
     height: 100%;
+  }
+
+  .placeholder-image svg,
+  .placeholder-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: var(--image-fit, cover);
+    object-position: var(--image-position, center center);
     aspect-ratio: var(--ratio);
   }
 
   .image-block {
     display: flex;
+    position: relative;
 
     /* When the image is nested in a group, section, etc, respect the parent's horizontal alignment */
     justify-content: var(--horizontal-alignment, 'inline-start');
   }
 
+  .image-block__wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
   .image-block--height-fill .image-block__image {
     height: 100%;
+    width: 100%;
   }
 
   .image-block__image {
-    object-fit: cover;
-    aspect-ratio: var(--ratio);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: var(--image-fit, cover);
+    object-position: var(--image-position, center center);
   }
 {% endstylesheet %}
 
@@ -228,6 +252,84 @@
       ],
       "default": "fit",
       "visible_if": "{{ block.settings.image_ratio == 'adapt' }}"
+    },
+    {
+      "type": "header",
+      "content": "Image Alignment"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "info": "How the image should fit within its container",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Contain (show entire image)"
+        },
+        {
+          "value": "cover",
+          "label": "Cover (fill container)"
+        },
+        {
+          "value": "fill",
+          "label": "Fill (stretch to fit)"
+        },
+        {
+          "value": "none",
+          "label": "None (original size)"
+        },
+        {
+          "value": "scale-down",
+          "label": "Scale down"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "info": "Where to position the image within its container",
+      "options": [
+        {
+          "value": "left top",
+          "label": "Top left"
+        },
+        {
+          "value": "center top",
+          "label": "Top center"
+        },
+        {
+          "value": "right top",
+          "label": "Top right"
+        },
+        {
+          "value": "left center",
+          "label": "Center left"
+        },
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "right center",
+          "label": "Center right"
+        },
+        {
+          "value": "left bottom",
+          "label": "Bottom left"
+        },
+        {
+          "value": "center bottom",
+          "label": "Bottom center"
+        },
+        {
+          "value": "right bottom",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "center center"
     },
     {
       "type": "header",

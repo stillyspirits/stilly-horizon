@@ -21,7 +21,7 @@
   <image-block
     ratio="{{ block_settings.ratio }}"
     height="{{ block_settings.height }}"
-    style="--border-radius: {{ block_settings.border_radius }}px;"
+    style="--border-radius: {{ block_settings.border_radius }}px; --image-fit: {{ block_settings.image_fit | default: 'cover' }}; --image-position: {{ block_settings.image_position | default: 'center center' }};"
     {{ block.shopify_attributes }}
   >
     {{
@@ -34,7 +34,7 @@
   <image-block
     ratio="{{ block_settings.ratio }}"
     height="{{ block_settings.height }}"
-    style="--border-radius: {{ block_settings.border_radius }}px;"
+    style="--border-radius: {{ block_settings.border_radius }}px; --image-fit: {{ block_settings.image_fit | default: 'cover' }}; --image-position: {{ block_settings.image_position | default: 'center center' }};"
     {{ block.shopify_attributes }}
   >
     {{ placeholder | default: 'hero-apparel-2' | placeholder_svg_tag: 'hero__image' }}
@@ -96,7 +96,8 @@
     }
 
     img {
-      object-fit: cover;
+      object-fit: var(--image-fit, cover);
+      object-position: var(--image-position, center center);
       width: 100%;
       height: auto;
       aspect-ratio: var(--ratio);
@@ -163,6 +164,84 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Image Alignment"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "info": "How the image should fit within its container",
+      "options": [
+        {
+          "value": "contain",
+          "label": "Contain (show entire image)"
+        },
+        {
+          "value": "cover",
+          "label": "Cover (fill container)"
+        },
+        {
+          "value": "fill",
+          "label": "Fill (stretch to fit)"
+        },
+        {
+          "value": "none",
+          "label": "None (original size)"
+        },
+        {
+          "value": "scale-down",
+          "label": "Scale down"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "info": "Where to position the image within its container",
+      "options": [
+        {
+          "value": "left top",
+          "label": "Top left"
+        },
+        {
+          "value": "center top",
+          "label": "Top center"
+        },
+        {
+          "value": "right top",
+          "label": "Top right"
+        },
+        {
+          "value": "left center",
+          "label": "Center left"
+        },
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "right center",
+          "label": "Center right"
+        },
+        {
+          "value": "left bottom",
+          "label": "Bottom left"
+        },
+        {
+          "value": "center bottom",
+          "label": "Bottom center"
+        },
+        {
+          "value": "right bottom",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "center center"
     }
   ]
 }
