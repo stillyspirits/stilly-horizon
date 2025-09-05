@@ -109,17 +109,13 @@
         {% comment %} Gradient background styles - auto-apply to sections {% endcomment %}
         
         /* Apply gradient background to sections with this color scheme */
-        .section.color-{{ scheme.id }} {
+        .section.color-{{ scheme.id }},
+        .hero.color-{{ scheme.id }}:not(:has(.hero__media-wrapper)) {
           background: var(--gradient-background);
           {% if animation_enabled %}
             background-size: 400% 400%;
             animation: gradient-shift {{ animation_speed }}s ease infinite;
           {% endif %}
-        }
-        
-        /* For hero sections specifically, only apply when no media */
-        .hero.color-{{ scheme.id }}:has(.hero__media-wrapper) {
-          background: none;
         }
         
         .color-{{ scheme.id }}.gradient-background,
