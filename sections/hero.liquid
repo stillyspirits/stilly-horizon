@@ -156,9 +156,6 @@
     </div>
   {%- endif -%}
 
-  {% if has_media == false and is_transparent %}
-    {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero__image' }}
-  {%- endif -%}
 {% endcapture %}
 
 {% capture media_blurred %}
@@ -188,9 +185,6 @@
         sizes: sizes
     }}
   {% endif %}
-  {% if has_media == false and is_transparent %}
-    {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero__image' }}
-  {% endif %}
 {% endcapture %}
 
 <div
@@ -216,7 +210,7 @@
     data-blur-shadow="true"
   {% endif %}
 >
-  {% if section.settings.blurred_reflection %}
+  {% if section.settings.blurred_reflection and has_media %}
     {% unless has_video_multiple or is_transparent == false %}
       <div class="hero__blurred-image">
         {{ media_blurred }}
@@ -242,17 +236,19 @@
         {% endif %}
       ></a>
     {%- endif -%}
-    <div
-      class="hero__media-wrapper"
-      style="--hero-media-count: {{ media_count }};{%- if section.settings.image_1 != blank -%} --hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }};{% endif %}"
-    >
-      {% liquid
-        if section.settings.toggle_overlay
-          render 'overlay', settings: section.settings
-        endif
-      %}
-      {{ media }}
-    </div>
+    {%- if has_media -%}
+      <div
+        class="hero__media-wrapper"
+        style="--hero-media-count: {{ media_count }};{%- if section.settings.image_1 != blank -%} --hero-media-aspect-ratio: {{ section.settings.image_1.aspect_ratio }};{% endif %}"
+      >
+        {% liquid
+          if section.settings.toggle_overlay
+            render 'overlay', settings: section.settings
+          endif
+        %}
+        {{ media }}
+      </div>
+    {%- endif -%}
     <div
       class="
         hero__content-wrapper
@@ -283,6 +279,12 @@
   .hero {
     position: relative;
     min-height: calc(var(--hero-min-height) - var(--hero-height-offset));
+  }
+  
+  /* When no media is present, the color scheme background/gradient will show through naturally */
+  .hero:not(:has(.hero__media-wrapper)) .hero__container {
+    /* Ensure the container fills the space when no media */
+    min-height: inherit;
   }
 
   .hero[data-shopify-visual-preview] {
